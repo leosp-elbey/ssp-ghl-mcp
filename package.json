@@ -1,0 +1,22 @@
+{
+  "name": "ssp-ghl-mcp",
+  "version": "1.0.0",
+  "description": "GHL MCP server scoped to Swipe Saver Pro location",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server-http.js",
+    "start:stdio": "node index.js",
+    "start:http": "node server-http.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "express": "^5.2.1"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
