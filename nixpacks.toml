@@ -1,0 +1,8 @@
+[phases.build]
+cmds = ["npm install"]
+
+[phases.start]
+cmd = "node server-http.js"
+
+[variables]
+NODE_VERSION = "20"
