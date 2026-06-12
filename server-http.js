@@ -218,6 +218,47 @@ app.get("/", (req, res) => res.json({ name: "ssp-ghl-mcp", version: "1.0.0", sta
 
 // SSE connections map
 const transports = new Map();
+// ── OAuth metadata (Claude.ai MCP connector auth discovery) ─────────────────
+app.get("/.well-known/oauth-authorization-server", (req, res) => {
+    const base = `https://ssp-ghl-mcp.up.railway.app`;
+    res.json({
+          issuer: base,
+          authorization_endpoint: `${base}/oauth/authorize`,
+          token_endpoint: `${base}/oauth/token`,
+          response_types_supported: ["code"],
+          grant_types_supported: ["authorization_code"],
+          code_challenge_methods_supported: ["S256"],
+    });
+});
+
+app.get("/.well-known/oauth-protected-resource", (req, res) => {
+    const base = `https://ssp-ghl-mcp.up.railway.app`;
+    res.json({
+          resource: base,
+          authorization_servers: [base],
+    });
+});
+
+app.get("/oauth/authorize", (req, res) => {
+    const { redirect_uri, state } = req.query;
+    if (redirect_uri) {
+          const url = new URL(redirect_uri);
+          url.searchParams.set("code", "ssp-no-auth");
+          if (state) url.searchParams.set("state", state);
+          return res.redirect(url.toString());
+    }
+    res.status(400).json({ error: "missing redirect_uri" });
+});
+
+app.post("/oauth/token", (req, res) => {
+    res.json({
+          access_token: "ssp-static-token",
+          token_type: "Bearer",
+          expires_in: 86400,
+    });
+});
+
+
 
 app.get("/sse", async (req, res) => {
   const transport = new SSEServerTransport("/messages", res);
