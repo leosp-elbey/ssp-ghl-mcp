@@ -1,7 +1,7 @@
 # SWIPE SAVER PRO — MASTER CONTINUATION FILE
-Version: 4.0 — Full System Live
-Last Updated: June 16, 2026 (Session 17)
-Status: SYSTEM LIVE — Full Chain Confirmed GREEN — SSP-05 Email Confirmed Firing
+Version: 4.1 — Full System Live + Payment Stack Blueprint
+Last Updated: June 17, 2026 (Session 17 continued)
+Status: SYSTEM LIVE — Full Chain Confirmed GREEN — Payment Stack Blueprint E2E Confirmed
 
 READING ORDER FOR NEW INSTANCES: Read this file first. Then read MODEL_HANDOFF_INSTRUCTIONS.md. Do not read older .docx versions — they contain stale/conflicting data.
 
@@ -165,29 +165,34 @@ All stubs are Draft/Inactive. No action steps exist in any stub. Do NOT activate
 
 ## CURRENT STATE — E2E TEST
 
-### ✅ FULL PIPELINE E2E TEST — PASSED (June 14, 2026)
+### ✅ FULL PIPELINE E2E TEST — PASSED WITH BLUEPRINT (June 17, 2026)
 
-**Test run: SSP TestFinal2 | palmerppllc@gmail.com | (321) 384-6209**
+**Test run: SSP ScoreFix | palmerppllc@gmail.com | GHL ID: 93q2hKoTpyN8I6LSREz9**
 
-Make.com execution (Jun 14, ~2:34 PM):
-- SSP-04 success run: 6 operations, 2 seconds
+Make.com execution (Jun 17, 12:03 AM):
+- SSP-05 success run: 3 modules, 3 operations, 1 second
 - Module 1 (Webhook): PASS
-- Module 32 (Search Opportunities): PASS
-- Module 23 (Update Opportunity): FILTERED (correctly — no existing opp)
-- Module 2 (Create Opportunity): PASS ✅ opportunity created in SSP Merchant Audit pipeline
-- Module 17 (Enroll in workflow): PASS
-- Module 20 (Gmail advisor alert): PASS ✅ email sent
-- Module 43 (HTTP → SSP-05 webhook): PASS ✅ SSP-05 triggered
+- Module 2 (GHL Get Contact): PASS ✅
+- Module 3 (Gmail Send Email): PASS ✅ — audit email delivered to palmerppllc@gmail.com
 
-**SSP-04 filter fix confirmed working:**  
-Filter on Module 23: `{{32.Body.meta.total}} text:notequal ""` — correctly routes new contacts to Create, returning contacts to Update.
+**Email confirmed containing:**
+- Subject: `[SSP] Merchant Risk Report - 93q2hKoTpyN8I6LSREz9`
+- Merchant Status: Stable | Business Type: E-Commerce | Service Route: Audit-Call | Composite Score: 17
+- All 4 scores populated: Shutdown 22, Chargeback 18, Funding 15, Cost Leakage 12
+- **Payment Stack Blueprint section confirmed:**
+  - Primary Processor: Stripe
+  - Backup Processor: Square
+  - ACH / Bank Transfer Rail: Dwolla
+  - Priority Actions: Reduce chargeback ratio, Enable ACH payments
 
-**Resume error handler on Module 2:** Added June 14 — catches [400] duplicate errors gracefully without deactivating scenario.
+**SSP-02 contact_id bug fixed (June 17):**  
+SSP-02 Module 3 (HTTP to SSP-03) was only sending `{"ssp02": {{2.result}}}` — `contact_id` was never forwarded downstream. Fixed via blueprint PATCH: body now sends `{"contact_id": "{{1.meta.ghl_contact_id}}", "ssp02": {{2.result}}}`. This caused SSP-05 Module 2 to error with [400] on every prior test since the contact ID token resolved to a stale/deleted contact ID.
 
 ### Previous Test Contacts
 - Test Contact 1: test-ssp@swipesaverpro-internal.com — deleted
-- Test Contact 2: test-ssp2@swipesaverpro-internal.com (GHL ID: sgjfXmEhAJsQ20I9VLPl) — E2E run June 13
-- Test Contact 3: SSP TestFinal2, palmerppllc@gmail.com — E2E run June 14 (final confirm)
+- Test Contact 2: test-ssp2@swipesaverpro-internal.com (GHL ID: sgjfXmEhAJsQ20I9VLPl) — deleted
+- Test Contact 3: SSP TestFinal2, palmerppllc@gmail.com — E2E run June 14
+- Test Contact 4: SSP ScoreFix, palmerppllc@gmail.com (GHL ID: 93q2hKoTpyN8I6LSREz9) — **ACTIVE TEST CONTACT** — Blueprint E2E confirmed June 17
 
 
 ## NEXT BUILD PRIORITIES — IN ORDER
@@ -198,7 +203,7 @@ Filter on Module 23: `{{32.Body.meta.total}} text:notequal ""` — correctly rou
 | 2 | W-1 through W-7 Action Steps | ✅ BUILT AND ACTIVE — all 7 published | Complete |
 | 3 | Merchant Dashboard | ✅ BUILT — GHL Custom Dashboard live (June 15, 2026) | Complete |
 | 4 | BNPL Qualification Matrix | ✅ BNPL eligibility field + scoring wired (June 16, 2026) | Complete |
-| 5 | Payment Stack Blueprint Output | ⏸ NOT BUILT | BNPL matrix done |
+| 5 | Payment Stack Blueprint Output | ✅ COMPLETE — deployed June 17, E2E confirmed | Complete |
 | 6 | Automation Expansion | ⏸ NOT BUILT | All above done |
 | 7 | SaaS Layer | ⏸ NOT BUILT | Full system proven |
 
@@ -347,6 +352,7 @@ Do not update this file speculatively. Only mark things complete when confirmed 
 | June 14, 2026 | Session 15 | W-7 SMS number corrected to +19145136653. All 7 workflows activated (W-1 through W-7). SSP-04 requestCompressedContent fixed on all 7 HTTP modules. SSP-04 queue cleared. SSP-05 confirmed firing end-to-end — Module 43 completed, audit email confirmed delivered. Calendar booking URLs updated to confirmed live /booking/ URLs. Full system GREEN. Master file updated to v3.4. |
 | June 15, 2026 | Session 16 | SSP-05 score token bug fixed (6 token name mismatches corrected via blueprint PATCH). All 5 scores confirmed in email. GHL Custom Dashboard "SSP — Merchant Audit Overview" built (ID: 6a30b3a176c362a37c584612) with 5 widgets — pipeline donut + 4 stage count widgets. Verified against test contact. Priority 3 complete. |
 | June 16, 2026 | Session 17 | SSP_BNPL_Eligible GHL field created (ID: Uz63wZWLBcSsIKWzrZnh, folder: cWl8ahMTs2X3bh2cv29Q). Wired into SSP-03 Module 2 via blueprint PATCH (10 custom fields total). SSP — Active Audits Smart List updated with SSP_BNPL_Eligible column. Full BNPL eligibility chain confirmed across SSP-02 → SSP-06 → SSP-03 → SSP-04 → SSP-05. Priority 4 complete. Master file updated to v4.0. |
+| June 17, 2026 | Session 17 (cont.) | Payment Stack Blueprint deployed: SSP-02 gains 4 blueprint output functions (getPrimaryProcessor, getBackupProcessor, getACHRecommendation, getPriorityActions) + 4 flat output keys. SSP-03 Module 3 updated to pass all 4 blueprint fields to SSP-04. SSP-04 modules 37-43 updated to forward blueprint fields to SSP-05. SSP-05 email gains Blueprint HTML block. SSP-02 contact_id bug fixed — HTTP body to SSP-03 now includes `contact_id: {{1.meta.ghl_contact_id}}`. SSP-05 Module 2 [400] bug resolved. E2E test with SSP ScoreFix (ID: 93q2hKoTpyN8I6LSREz9) PASSED — Blueprint section confirmed in email. Priority 5 complete. Master file updated to v4.1. |
 
 
 ## BTRPAY PORTAL AUDIT — June 13, 2026
@@ -368,4 +374,43 @@ Full audit of https://myportal.btrpay.com/v2. Conducted via Chrome MCP.
 
 ### My Leads — 0 leads in system
 
-### My Merchants — Active merchants visible (REVOS AUTO GROUP LLC primary active merchant)
+### My Merchants — Active merchants visible (REVOS AUTO GROUP LLC primary active)
+
+### Applications — 11 total applications (all Paysafe / Merchants-Paysafe group)
+1. TAVERNA EVIA / MAZY MANAGEMENT GROUP INC — $420K — APPROVED — Submitted 09/29/2022 — Decision 09/30/2022
+2. REVOS AUTO GROUP LLC — $3.6M — APPROVED — Submitted 12/01/2022 — Decision 12/03/2022
+3. UNIQUE BEAUTY & BARBER STYLES / ANDERSON JAMEAN ALRICK — $240K — WITHDRAWN — Submitted 12/15/2022
+4. WORLD FINE DESIGNS / CASH & CARRY LLC — $1.8M — APPROVED — Submitted 10/31/2022 — Decision 12/22/2022
+5. REVOS AUTO GROUP LLC — $3.6M — APPROVED — Submitted 03/06/2023 — Decision 03/09/2023
+6. REVOS AUTO GROUP LLC — $3.6M — APPROVED — Submitted 04/06/2023 — Decision 04/14/2023
+7. LASER HAIR REMOVAL MED SPA / TOUCH ME MED SPA LLC — $840K — APPROVED — Submitted 04/14/2023 — Decision 04/14/2023
+8. HALFWAYHOUSE GROUP LLC — $720K — DECLINED — Submitted 04/26/2023
+9. THE VAPERS WORLD / TVP GROUP LLC — $1.44M — DECLINED — Submitted 12/13/2024
+10. DRIVE 2 EARN / ICON GROUP INVESTMENTS LLC — $3M — APPROVED — Submitted 09/30/2025 — Decision 09/30/2025
+11. AUTO DIRECT / AUTO DIRECT INC — $3M — APPROVED — Submitted 04/17/2026 — Decision 04/24/2026 — MID: 3286738869215930 — Merchant #: 0fcf3deb-e336-4ead-b5c4-2b2dbe68893a
+
+### Scoop (The Scoop)
+- Portfolio Overview: My Total Volume Shown $378,132 (Jun'25–Jun'26). Total Residual Contribution June 2026: Reports Not Uploaded. Total Approved June 2026: Rafael Guzman (2), John Cherico (1).
+- Agents tab: Accounts Approved Jan–Jun 2026 Leo Palmer vs Group Average — 1 approval in April. Percent Approved Top 5 Agents: No Data.
+
+### Dispute Reporting
+- 0 disputes on record (Month to Date, All Types, All Processors, All Groups)
+
+### Risk Reporting
+- 2 of 13 total entries visible (Month to Date filter)
+- Row 1: REVOS AUTO GROUP LLC — MID 3286768974538732 — Total Vol $7,862.70 — Sales Vol $8,012.70 — 9 sales — Avg Ticket $890.30 — Returns $150.00 — 1 return — Return Vol Ratio 1.872% — Return # Ratio 11.11% — No chargebacks
+- Row 2: REVOS AUTO GROUP LLC — MID 7630769333407897 — Total Vol $2,000.00 — Sales Vol $2,000.00 — 1 sale — Avg Ticket $2,000.00 — No returns — No chargebacks
+
+### Risk Alerts and Notifications
+- Triggered Alerts (June 2026): 0 alerts triggered
+- Set Alerts: 0 alerts configured
+
+### Proposal Generator
+- Error: "You do not have access to any Proposal Generator templates. An Administrator can set access in the Manage Proposal Generator Templates page." — Feature not yet enabled for Leo Palmer account.
+
+### Profile Dropdown Options
+Settings | Remaining Credits (4,994 min) | CRM Assistant | Custom Style | Help | Get Mobile App | Log Out
+
+
+Swipe Saver Pro — Internal Use Only
+Provides payment operations guidance only. Not legal, financial, or regulatory advice.
