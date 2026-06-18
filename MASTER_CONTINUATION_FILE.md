@@ -1,7 +1,7 @@
 # SWIPE SAVER PRO — MASTER CONTINUATION FILE
-Version: 4.1 — Full System Live + Payment Stack Blueprint
-Last Updated: June 17, 2026 (Session 17 continued)
-Status: SYSTEM LIVE — Full Chain Confirmed GREEN — Payment Stack Blueprint E2E Confirmed
+Version: 4.2 — Workflows W-1 Through W-5 Built
+Last Updated: June 18, 2026 (Session 18)
+Status: SYSTEM LIVE — All 7 Workflows Published — Full Chain + Blueprint Confirmed
 
 READING ORDER FOR NEW INSTANCES: Read this file first. Then read MODEL_HANDOFF_INSTRUCTIONS.md. Do not read older .docx versions — they contain stale/conflicting data.
 
@@ -67,7 +67,7 @@ NOT on: Lowest Rates | Terminal Sales | Commodity Processing
 | 12 SSP_ Custom Fields (Merchant Application folder) | ✅ CONFIRMED |
 | 22 SSP Contact Tags | ✅ CONFIRMED |
 | 4 SSP Calendars | ✅ CONFIRMED — booking URLs confirmed June 14 |
-| W-1 through W-7 Workflows | ✅ PUBLISHED/ACTIVE — all action steps built and live (June 14, 2026) |
+| W-1 through W-7 Workflows | ✅ PUBLISHED/ACTIVE — full action steps rebuilt/verified (June 17–18, 2026) |
 | Sean AI Agent | ✅ ACTIVE — assigned to +13213846209, presents as "Sean", Christopher voice, GPT-4o |
 | Call Recording | ✅ ON — +13213846209, no disclosure message |
 | Call Transcription | ✅ ON — account-level, all calls |
@@ -115,11 +115,11 @@ All stubs are Draft/Inactive. No action steps exist in any stub. Do NOT activate
 
 | Stub | Name in GHL | Trigger | Gate |
 | --- | --- | --- | --- |
-| W-1 | SSP — Self-Service Education (8bc52b0e-2074-4c26-b964-e8e35ff6eaeb) | SSP_Service_Route = Self-Service | None | ✅ PUBLISHED | 8 steps |
-| W-2 | SSP — Audit Review Call (cbcc7580-20ff-4fda-9cd9-d453304c449c) | SSP_Service_Route = Audit-Call | None | ✅ PUBLISHED | 10 steps |
-| W-3 | SSP — Risk Mitigation Program (a66febf9-7088-43dd-9d7c-f085ed6dc56e) | SSP_Service_Route = Risk-Mitigation | None | ✅ PUBLISHED | 10 steps |
+| W-1 | SSP — Self-Service Education (8bc52b0e-2074-4c26-b964-e8e35ff6eaeb) | SSP_Service_Route = Self-Service | None | ✅ PUBLISHED | 23 steps — SMS + educational email sequence + 30-day checkin (rebuilt June 17) |
+| W-2 | SSP — Audit Review Call (cbcc7580-20ff-4fda-9cd9-d453304c449c) | SSP_Service_Route = Audit-Call | None | ✅ PUBLISHED | 13 steps — SMS + Goal (Audit Review Call calendar) + follow-up sequence (rebuilt June 17) |
+| W-3 | SSP — Risk Mitigation Program (a66febf9-7088-43dd-9d7c-f085ed6dc56e) | SSP_Service_Route = Risk-Mitigation | None | ✅ PUBLISHED | 12 steps — SMS + Goal (Risk Consultation calendar) + priority follow-up (rebuilt June 17–18) |
 | W-4 | SSP — Processor Migration (41dd0319-2f6a-477f-a735-5433ff6d939d) [HUMAN GATE] | SSP_Service_Route = Processor-Migration | Human gate required | ✅ PUBLISHED | 2 steps — internal only |
-| W-5 | SSP — Backup Processor Setup (6fa42e13-e6ab-4efd-8f7c-3100410ab00c) | SSP_Service_Route = Backup-Setup | None | ✅ PUBLISHED | 8 steps |
+| W-5 | SSP — Backup Processor Setup (6fa42e13-e6ab-4efd-8f7c-3100410ab00c) | SSP_Service_Route = Backup-Setup | None | ✅ PUBLISHED | 11 steps — SMS + Goal (Audit Review Call calendar) + follow-up sequence (rebuilt June 18) |
 | W-6 | SSP — BNPL Evaluation (2178549d-f653-4875-ab0a-552966268a08) [HUMAN GATE] | SSP_Service_Route = BNPL-Eval | Human gate required | ✅ PUBLISHED | 2 steps — internal only |
 | W-7 | SSP — High-Risk Placement EMERGENCY (ed5f747a-7ecb-48bd-9e0d-3ef3010989d1) [HUMAN GATE] | SSP_Service_Route = High-Risk-Placement | Human gate required | ✅ PUBLISHED | 5 steps — Step 3 SMS to +19145136653 (confirmed June 14) |
 
@@ -353,6 +353,7 @@ Do not update this file speculatively. Only mark things complete when confirmed 
 | June 15, 2026 | Session 16 | SSP-05 score token bug fixed (6 token name mismatches corrected via blueprint PATCH). All 5 scores confirmed in email. GHL Custom Dashboard "SSP — Merchant Audit Overview" built (ID: 6a30b3a176c362a37c584612) with 5 widgets — pipeline donut + 4 stage count widgets. Verified against test contact. Priority 3 complete. |
 | June 16, 2026 | Session 17 | SSP_BNPL_Eligible GHL field created (ID: Uz63wZWLBcSsIKWzrZnh, folder: cWl8ahMTs2X3bh2cv29Q). Wired into SSP-03 Module 2 via blueprint PATCH (10 custom fields total). SSP — Active Audits Smart List updated with SSP_BNPL_Eligible column. Full BNPL eligibility chain confirmed across SSP-02 → SSP-06 → SSP-03 → SSP-04 → SSP-05. Priority 4 complete. Master file updated to v4.0. |
 | June 17, 2026 | Session 17 (cont.) | Payment Stack Blueprint deployed: SSP-02 gains 4 blueprint output functions (getPrimaryProcessor, getBackupProcessor, getACHRecommendation, getPriorityActions) + 4 flat output keys. SSP-03 Module 3 updated to pass all 4 blueprint fields to SSP-04. SSP-04 modules 37-43 updated to forward blueprint fields to SSP-05. SSP-05 email gains Blueprint HTML block. SSP-02 contact_id bug fixed — HTTP body to SSP-03 now includes `contact_id: {{1.meta.ghl_contact_id}}`. SSP-05 Module 2 [400] bug resolved. E2E test with SSP ScoreFix (ID: 93q2hKoTpyN8I6LSREz9) PASSED — Blueprint section confirmed in email. Priority 5 complete. Master file updated to v4.1. |
+| June 17–18, 2026 | Session 18 | W-1 through W-5 full action step rebuild. W-1: 23 steps (SMS + educational email sequence + 30-day checkin tag + internal close). W-2: 13 steps (SMS + Goal/Audit Review Call + follow-up + internal no-booking alert). W-3: 12 steps (SMS + Goal/Risk Consultation + priority follow-up alert). W-4/W-6: human-gate — internal only, no changes needed. W-5: 11 steps (SMS + Goal/Audit Review Call + follow-up + internal no-booking alert). W-7: already complete. All 7 workflows published. Wait durations corrected on W-5 (steps 7 and 9 were in hours — corrected to days). Master file updated to v4.2. |
 
 
 ## BTRPAY PORTAL AUDIT — June 13, 2026
